@@ -66,6 +66,17 @@ function playAnimation(anim) {
   }, anim.displayTime)
 }
 
+// Preload images
+image_cache = []
+for (let anim of Object.values(animations)) {
+  for (let src of anim.frames) {
+    img = new Image()
+    img.src = `img/${src}.png`
+    image_cache.push(img)
+  }
+}
+
+
 // Attach event listeners
 document.addEventListener("click", (e) => {
   if (e.target.className != "hotspot") return
