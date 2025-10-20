@@ -1,0 +1,65 @@
+body {
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#game {
+  position: relative;
+  margin: auto;
+}
+
+#game {
+  cursor: url('img/cur_def.png') 25 30, auto;
+}
+
+#game.clicked {
+  cursor: url('img/cur_click.png') 25 30, auto;
+}
+
+#mainImage {
+  height: 90vh;
+  display: block;
+}
+
+.hotspot {
+  position: absolute;
+}
+
+#tailLTR {
+  top: 44%;
+  left: 17%;
+  width: 4%;
+  height: 14%;
+}
+#tailRTL {
+  top: 46%;
+  left: 82%;
+  width: 4%;
+  height: 13%;
+}
+#chest {
+  top: 48%;
+  left: 35%;
+  width: 24%;
+  height: 10%;
+}
+#thighL {
+  bottom: 14%;
+  left: 29%;
+  width: 16%;
+  height: 14%;
+}
+#thighR {
+  bottom: 12%;
+  left: 45%;
+  width: 19%;
+  height: 14%;
+}
+
+/* Testing */
+/* .hotspot {
+  border: 2px dashed red;
+} */
