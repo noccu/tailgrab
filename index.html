@@ -10,13 +10,29 @@
   <body>
     <h2>Cats don't like to have their tails touched.</h2>
     <div id="game">
-      <img id="mainImage" src="img/base.png" alt="game image" />
-
-      <div id="tailLTR" class="hotspot"></div>
-      <div id="tailRTL" class="hotspot"></div>
-      <div id="chest" class="hotspot"></div>
-      <div id="thighL" class="hotspot"></div>
-      <div id="thighR" class="hotspot"></div>
+      <img id="mainImage" src="img/base.png" usemap="#touch-zones" />
+      <map name="touch-zones">
+        <area
+          id="tailRTL"
+          coords="605,961,657,964,735,916,806,815,822,708,819,653,840,643,857,655,864,738,839,842,771,945,669,1003,615,1001"
+          shape="poly"
+        />
+        <area
+          id="tailLTR"
+          coords="170,627,194,608,215,629,211,738,237,799,236,855,257,885,283,880,318,920,373,938,366,955,349,980,272,934,222,873,176,787,160,694"
+          shape="poly"
+        />
+        <area
+          id="thighs"
+          coords="336,1003,373,999,440,1043,471,1073,482,1055,548,1032,616,1046,640,1062,647,1087,632,1161,591,1225,532,1281,462,1231,381,1229,366,1246,283,1249,297,1106,314,1034"
+          shape="poly"
+        />
+        <area
+          id="chest"
+          coords="364,679,343,745,361,809,451,822,578,822,609,752,592,693"
+          shape="poly"
+        />
+      </map>
     </div>
   </body>
 </html>

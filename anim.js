@@ -1,7 +1,9 @@
 "use strict"
 
 const MAIN_IMAGE = document.getElementById("mainImage")
-
+const TOUCH_ZONES = document
+  .getElementsByName("touch-zones")[0]
+  .querySelectorAll("area")
 const ANIMATIONS = {
   // base = rtl 0
   tailLTR: {
@@ -67,6 +69,20 @@ function playAnimation(anim) {
   }, anim.displayTime)
 }
 
+function scaleImageMap() {
+  const wr = MAIN_IMAGE.clientWidth / MAIN_IMAGE.naturalWidth
+  const hr = MAIN_IMAGE.clientHeight / MAIN_IMAGE.naturalHeight
+
+  for (const area of TOUCH_ZONES) {
+    var original = area.dataset.origCoords
+    if (!original) area.dataset.origCoords = original = area.coords
+    area.coords = original
+      .split(",")
+      .map((c, i) => Math.round(c * (i % 2 ? hr : wr)))
+      .join(",")
+  }
+}
+
 // Preload images
 const image_cache = []
 for (const anim of Object.values(ANIMATIONS)) {
@@ -77,10 +93,13 @@ for (const anim of Object.values(ANIMATIONS)) {
   }
 }
 
+// Scale map
+scaleImageMap()
+window.addEventListener("resize", scaleImageMap)
 
 // Interaction
 document.addEventListener("click", (e) => {
-  if (e.target.className != "hotspot") return
+  if (e.target.tagName != "AREA") return
   if (ANIM_PLAYING) return
 
   var animName = e.target.id
@@ -88,29 +107,28 @@ document.addEventListener("click", (e) => {
   var grabStart = 20
   var grabLen = 400
 
-  if (animName.startsWith("thigh")) {
-    animName = `thighs${LAST_TAIL_POS}`
+  if (animName == "thighs") {
+    animName += LAST_TAIL_POS
     grabLen = 1100
     grabStart = 0
   } else if (animName == "chest") {
-    animName = `${animName}${LAST_TAIL_POS}`
+    animName += LAST_TAIL_POS
     doGrab = false
   }
+
+  if (animName == "tailLTR") {
+    if (LAST_TAIL_POS == "RTL") return
+    LAST_TAIL_POS = "RTL"
+  } else if (animName == "tailRTL") {
+    if (LAST_TAIL_POS == "LTR") return
+    LAST_TAIL_POS = "LTR"
+  }
+
   playAnimation(ANIMATIONS[animName])
   if (doGrab) {
     const game = document.getElementById("game")
     setTimeout(() => game.classList.add("clicked"), grabStart)
     setTimeout(() => game.classList.remove("clicked"), grabLen)
-  }
-
-  if (animName == "tailLTR") {
-    e.target.style.pointerEvents = "none"
-    document.getElementById("tailRTL").style.pointerEvents = "unset"
-    LAST_TAIL_POS = "RTL"
-  } else if (animName == "tailRTL") {
-    e.target.style.pointerEvents = "none"
-    document.getElementById("tailLTR").style.pointerEvents = "unset"
-    LAST_TAIL_POS = "LTR"
   }
 })
 
