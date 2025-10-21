@@ -40,7 +40,7 @@ function changeFrame(src) {
 
 function playAnimation(anim) {
   ANIM_PLAYING = true
-  lastImage = new URL(mainImage.src).pathname.match(/\/([^/]+)\./)[1]
+  lastImage = mainImage.src.match(/\/([^/]+)\..*$/)[1]
   // Immediately show first frame.
   changeFrame(anim.frames[0])
   if (anim.frames.length == 1) {
