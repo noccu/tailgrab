@@ -5,7 +5,7 @@ const animations = {
   // base = rtl 0
   tailLTR: {
     displayTime: 126,
-    frames: ["ltr0", "ltr1", "ltr2"],
+    frames: ["ltr1", "ltr2"],
     end: "base",
   },
   tailRTL: {
