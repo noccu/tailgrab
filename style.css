@@ -12,11 +12,11 @@ body {
 }
 
 #game {
-  cursor: url('img/cur_def.png') 25 30, auto;
+  cursor: url('img/cur_def.png') 30 35, auto;
 }
 
 #game.clicked {
-  cursor: url('img/cur_click.png') 25 30, auto;
+  cursor: url('img/cur_click.png') 30 35, auto;
 }
 
 #mainImage {
