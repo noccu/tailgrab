@@ -22,16 +22,15 @@ const animations = {
     frames: ["blushLTR"],
   },
   chestRTL: {
-    displayTime: 90,
+    displayTime: 75,
     frames: ["handRTL1", "handRTL2"],
   },
   chestLTR: {
-    displayTime: 90,
+    displayTime: 75,
     frames: ["handLTR1", "handLTR2"],
   },
 }
 
-const defaultFrameTimeMs = 250
 var lastImage = "base"
 var lastTailPos = "RTL"
 
@@ -84,7 +83,7 @@ document.addEventListener("click", (e) => {
 
   var animName = e.target.id
   var doGrab = true
-  var grabStart = 60
+  var grabStart = 20
   var grabLen = 400
 
   if (animName.startsWith("thigh")) {
