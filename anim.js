@@ -1,7 +1,8 @@
-const mainImage = document.getElementById("mainImage")
-var ANIM_PLAYING = false
+"use strict"
 
-const animations = {
+const MAIN_IMAGE = document.getElementById("mainImage")
+
+const ANIMATIONS = {
   // base = rtl 0
   tailLTR: {
     displayTime: 126,
@@ -31,23 +32,24 @@ const animations = {
   },
 }
 
-var lastImage = "base"
-var lastTailPos = "RTL"
+var ANIM_PLAYING = false
+var LAST_IMAGE = "base"
+var LAST_TAIL_POS = "RTL"
 
 function changeFrame(src) {
-  mainImage.src = `img/${src}.png`
+  MAIN_IMAGE.src = `img/${src}.png`
 }
 
 function playAnimation(anim) {
   ANIM_PLAYING = true
-  lastImage = mainImage.src.match(/\/([^/]+)\..*$/)[1]
+  LAST_IMAGE = MAIN_IMAGE.src.match(/\/([^/]+)\..*$/)[1]
   // Immediately show first frame.
   changeFrame(anim.frames[0])
   if (anim.frames.length == 1) {
     setTimeout(() => {
-      changeFrame(anim.end || lastImage)
+      changeFrame(anim.end || LAST_IMAGE)
       ANIM_PLAYING = false
-      }, anim.displayTime)
+    }, anim.displayTime)
     return
   }
   // Queue remaining frames
@@ -55,7 +57,7 @@ function playAnimation(anim) {
   const iv = setInterval(() => {
     // Final frame display time has lapsed
     if (idx == anim.frames.length) {
-      changeFrame(anim.end || lastImage)
+      changeFrame(anim.end || LAST_IMAGE)
       clearInterval(iv)
       ANIM_PLAYING = false
       return
@@ -66,17 +68,17 @@ function playAnimation(anim) {
 }
 
 // Preload images
-image_cache = []
-for (let anim of Object.values(animations)) {
-  for (let src of anim.frames) {
-    img = new Image()
+const image_cache = []
+for (const anim of Object.values(ANIMATIONS)) {
+  for (const src of anim.frames) {
+    const img = new Image()
     img.src = `img/${src}.png`
     image_cache.push(img)
   }
 }
 
 
-// Attach event listeners
+// Interaction
 document.addEventListener("click", (e) => {
   if (e.target.className != "hotspot") return
   if (ANIM_PLAYING) return
@@ -87,16 +89,16 @@ document.addEventListener("click", (e) => {
   var grabLen = 400
 
   if (animName.startsWith("thigh")) {
-    animName = `thighs${lastTailPos}`
+    animName = `thighs${LAST_TAIL_POS}`
     grabLen = 1100
     grabStart = 0
   } else if (animName == "chest") {
-    animName = `${animName}${lastTailPos}`
+    animName = `${animName}${LAST_TAIL_POS}`
     doGrab = false
   }
-  playAnimation(animations[animName])
+  playAnimation(ANIMATIONS[animName])
   if (doGrab) {
-    game = document.getElementById("game")
+    const game = document.getElementById("game")
     setTimeout(() => game.classList.add("clicked"), grabStart)
     setTimeout(() => game.classList.remove("clicked"), grabLen)
   }
@@ -104,12 +106,13 @@ document.addEventListener("click", (e) => {
   if (animName == "tailLTR") {
     e.target.style.pointerEvents = "none"
     document.getElementById("tailRTL").style.pointerEvents = "unset"
-    lastTailPos = "RTL"
+    LAST_TAIL_POS = "RTL"
   } else if (animName == "tailRTL") {
     e.target.style.pointerEvents = "none"
     document.getElementById("tailLTR").style.pointerEvents = "unset"
-    lastTailPos = "LTR"
+    LAST_TAIL_POS = "LTR"
   }
 })
 
+// Defaults
 document.getElementById("tailLTR").style.pointerEvents = "none"
