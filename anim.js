@@ -44,7 +44,7 @@ function changeFrame(src) {
 
 function playAnimation(anim) {
   ANIM_PLAYING = true
-  LAST_IMAGE = MAIN_IMAGE.src.match(/\/([^/]+)\..*$/)[1]
+  LAST_IMAGE = MAIN_IMAGE.src.match(/\/([^/]+)\.png$/)[1]
   // Immediately show first frame.
   changeFrame(anim.frames[0])
   if (anim.frames.length == 1) {
